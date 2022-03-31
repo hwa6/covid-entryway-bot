@@ -6,21 +6,20 @@ import time
 pin = 18
 
 def detect():
-    prev_value = None
+    print("enter func")
+    prev_value = 0
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pin, GPIO.IN)
+    print("setup")
     try:
         value = GPIO.input(pin)
-        if value != prev_value:
-            if value == GPIO.HIGH:
-                value_str = "HIGH"
-                print("Value read from pin {} : {}".format(pin, value_str))
-                return True
-            else:
-                value_str = "low"
-                print("Value read from pin {} : {}".format(pin, value_str))
-                return False
-            prev_value = value
-        time.sleep(1)
+        if value == GPIO.HIGH:
+            value_str = "HIGH"
+            print("Value read from pin {} : {}".format(pin, value))
+            return True
+        else:
+            value_str = "low"
+            print("Value read from pin {} : {}".format(pin, value))
+            return False
     finally:
         GPIO.cleanup()

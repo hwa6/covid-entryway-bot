@@ -5,7 +5,7 @@ import time
 
 #Dispense Mask
 def dispense():
-    print("dispense")
+    print("dispense func called")
     output_pin = 33
     output_pin = output_pins.get(GPIO.model, None)
     if output_pin is None:
@@ -18,7 +18,6 @@ def dispense():
     p = GPIO.PWM(output_pin, 250)
     #set duty cycle initial state as 0
     p.start(0)
-    print("PWM running. Press CTRL+C to exit.")
     try:
         for dc in range(0, 100, 5):
             print(dc)

@@ -7,19 +7,21 @@ import sanitizer
 import display
 
 while(1):
-    if(pir.detect):
+    if(pir.detect()):
+        print("pir detected")
         ##face detected, get label from model
-        if(mask.detect == False):
+        if(mask.detect() == False):
             ##no mask, dispense mask
             display.displayStatus("No Mask Detected, Dispensing Mask.")
-            mask.dispense
+            mask.dispense()
         else:
             ##mask on
             display.displayStatus("Mask Detected.")
         time.sleep(1)
         ##dispense hand sanitizer
         display.displayStatus("Dispensing Sanitizer")
-        sanitizer.dispense
+        sanitizer.dispense()
         time.sleep(5)
     else:
+        print("pir not detected")
         time.sleep(1)
