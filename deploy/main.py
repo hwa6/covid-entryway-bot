@@ -5,11 +5,12 @@ import pir
 import mask
 import sanitizer
 import display
+import model
 
 while(1):
     if(pir.detect()):
         ##face detected, get label from model
-        if(mask.detect(camera.getImage()) == False):
+        if(mask.detect() == False):
             ##no mask, dispense mask
             display.displayStatus("No Mask Detected, Dispensing Mask.")
             mask.dispense()
