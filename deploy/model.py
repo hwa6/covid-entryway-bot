@@ -92,7 +92,7 @@ def getImage():
         print("Image has been captured")
         label = classify_face(image)
         print("User is " + label)
-	return label
+        return label
     else:
         print("Error reading from camera :(")
        
@@ -100,5 +100,5 @@ def detect():
     print("Detecting mask")
     status = getImage()
     if(status == "with mask"):
-        return true
-    return false
+        return True
+    return False

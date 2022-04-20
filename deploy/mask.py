@@ -5,16 +5,6 @@ import RPi.GPIO as GPIO
 import time
 import model
 
-filepath = '/home/team7/covid-entryway-bot/deploy/model.pth'
-model = torch.load(filepath)
-
-
-class_names = ['with mask',
- 'without mask'
-]
-
-
-
 #function to dispense mask
 def dispense():
     print("dispense func called")

@@ -7,8 +7,10 @@ import sanitizer
 import display
 import model
 
+
+
 while(1):
-    if(pir.detect):
+    if(True):
         ##person detected, get label from model
         if(mask.detect() == False):
             ##no mask, dispense masks
