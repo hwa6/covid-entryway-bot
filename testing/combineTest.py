@@ -16,6 +16,8 @@ import time
 import copy
 from PIL import Image
 import glob
+import RPi.GPIO as GPIO
+import time
 
 filepath = '/home/team7/covid-entryway-bot/deploy/model.pth'
 model = torch.load(filepath)
@@ -24,6 +26,8 @@ model = torch.load(filepath)
 class_names = ['with mask',
  'without mask'
 ]
+
+output_pin_servo = 33
 
 #helper function for @classify_face()
 #@params image : PIL image
@@ -92,17 +96,60 @@ def getImage():
         print("Image has been captured")
         label = classify_face(image)
         print("User is " + label)
+        return label
     else:
         print("Error reading from camera :(")
+        return 'error'
 
-def main():
+def mask_main():
     print("Commencing model test")
     while True:
         val = input("Enter 'test' when ready: ")
         if (val == 'test'):
-            getImage()
+            return getImage()
 
-main()
-    
-        
+def getAngle(angle):
+    duty = angle/18 + 3
+    return duty
 
+def servo_main():
+    output_pin = 33
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(output_pin, GPIO.OUT, initial=GPIO.HIGH)
+    p = GPIO.PWM(output_pin, 250)
+    p.start(0)
+
+    print("PWM running. Press CTRL+C to exit.")
+    try:
+        while True:
+            val = input("What is the value of the PIR Sensor: ")
+            if(val == 'high'):
+                for dc in range(30, 100, 5):
+                    print(dc)
+                    p.ChangeDutyCycle(dc)
+                    time.sleep(.05)
+                time.sleep(5)
+                for dc in range(95, 25, -5):
+                    print(dc)
+                    p.ChangeDutyCycle(dc)
+                    time.sleep(.05)
+                break
+    finally:
+        p.stop()
+        GPIO.cleanup()
+
+def full_main():
+    while True:
+        mask = mask_main()
+        while(mask != 'with mask'):
+            if(mask == 'error'):
+                print('error with camera')
+                return 'error'
+            if(mask == 'without mask'):
+                servo_main()
+            mask = mask_main()
+        print("access_granted")
+        time.sleep(10)
+
+
+full_main()

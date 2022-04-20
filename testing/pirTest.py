@@ -14,13 +14,14 @@ def main():
     try:
         while True:
             value = GPIO.input(input_pin)
-            if value != prev_value:
+            if True:
+	    #if value != prev_value:
                 if value == GPIO.HIGH:
                     value_str = "HIGH"
                 else:
                     value_str = "LOW"
                 print("Value read from pin {} : {}".format(input_pin, value_str))
-                prev_val = value
+                #prev_val = value
             time.sleep(1)
     finally:
             GPIO.cleanup()

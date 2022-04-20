@@ -6,17 +6,7 @@
 import RPi.GPIO as GPIO
 import time
 
-output_pins = {
-    'JETSON_XAVIER': 18,
-    'JETSON_NANO': 33,
-    'JETSON_NX': 33,
-    'CLARA_AGX_XAVIER': 18,
-    'JETSON_TX2_NX': 32,
-}
-output_pin = output_pins.get(GPIO.model, None)
-if output_pin is None:
-    raise Exception('PWM not supported on this board')
-
+output_pin = 33
 
 def getAngle(angle):
     duty = angle / 18 + 3
@@ -35,14 +25,17 @@ def main():
     print("PWM running. Press CTRL+C to exit.")
     try:
         while True:
-            for dc in range(0, 100, 5):
-                print(dc)
-                p.ChangeDutyCycle(dc)
-                time.sleep(.05)
-            for dc in range(100, 0, -5):
-		 print(dc)
-                 p.ChangeDutyCycle(dc)
-                 time.sleep(.05)
+	    val = raw_input("What is the value of the PIR Sensor: ")
+	    if(val == 'high'):
+		for dc in range(30, 100, 5):
+                    print(dc)
+                    p.ChangeDutyCycle(dc)
+                    time.sleep(.05)
+		time.sleep(5)
+                for dc in range(95, 25, -5):
+		     print(dc)
+                     p.ChangeDutyCycle(dc)
+                     time.sleep(.05)
     finally:
         p.stop()
         GPIO.cleanup()

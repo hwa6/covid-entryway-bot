@@ -5,7 +5,14 @@ import RPi.GPIO as GPIO
 import time
 
 # Pin Definitions
-output_pin = 11  # BOARD pin 11
+output_pin = 33  # BOARD pin 11
+
+#GRND -> DC-
+#5v -> DC+
+#GPIO (Pin 33) -> IN
+#COM -> black termnal of battery
+#NO -> black terminal of pump
+#red terminal of battery -> red terminal of pump
 
 def main():
     # Pin Setup:
@@ -17,7 +24,7 @@ def main():
     curr_value = GPIO.HIGH
     try:
         while True:
-            time.sleep(10000)
+            time.sleep(1)
             # Toggle the output every second
             print("Outputting {} to pin {}".format(curr_value, output_pin))
             GPIO.output(output_pin, curr_value)
