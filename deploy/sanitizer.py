@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import time
 
 # Pin Definitions
-output_pin = 33  # BOARD pin 33
+output_pin = 11  # BOARD pin 11
 
 def dispense():
     print("Dispensing Sanitizer")
@@ -17,7 +17,7 @@ def dispense():
     print("Outputting {} to pin {}".format(curr_value, output_pin))
     GPIO.output(output_pin, curr_value)
     curr_value ^= GPIO.HIGH
-    time.sleep(2)
+    time.sleep(1)
     GPIO.output(output_pin, curr_value)
 
     GPIO.cleanup()

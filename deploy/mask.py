@@ -5,13 +5,10 @@ import RPi.GPIO as GPIO
 import time
 import model
 
+output_pin = 33
+
 #function to dispense mask
 def dispense():
-    print("dispense func called")
-    output_pin = 33
-    output_pin = output_pins.get(GPIO.model, None)
-    if output_pin is None:
-        raise Exception('PWM not enabled')
     # Pin Setup:
     # Board pin-numbering scheme
     GPIO.setmode(GPIO.BOARD)
@@ -20,12 +17,15 @@ def dispense():
     p = GPIO.PWM(output_pin, 250)
     #set duty cycle initial state as 0
     p.start(0)
+
+    print("PWM running. Press CTRL+C to exit.")
     try:
-        for dc in range(0, 100, 5):
+        for dc in range(30, 100, 5):
             print(dc)
             p.ChangeDutyCycle(dc)
             time.sleep(.05)
-        for dc in range(100, 0, -5):
+        time.sleep(5)
+        for dc in range(95, 25, -5):
             print(dc)
             p.ChangeDutyCycle(dc)
             time.sleep(.05)

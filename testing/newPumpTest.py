@@ -5,11 +5,11 @@ import RPi.GPIO as GPIO
 import time
 
 # Pin Definitions
-output_pin = 33  # BOARD pin 11
+output_pin = 11  # BOARD pin 11
 
 #GRND -> DC-
 #5v -> DC+
-#GPIO (Pin 33) -> IN
+#GPIO (Pin ) -> IN
 #COM -> black termnal of battery
 #NO -> black terminal of pump
 #red terminal of battery -> red terminal of pump
@@ -29,6 +29,7 @@ def main():
             print("Outputting {} to pin {}".format(curr_value, output_pin))
             GPIO.output(output_pin, curr_value)
             curr_value ^= GPIO.HIGH
+            time.sleep(1000)
     finally:
         GPIO.cleanup()
 
